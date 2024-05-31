@@ -1,1 +1,1 @@
-# sm-data-rs
+# sm-rs-data
