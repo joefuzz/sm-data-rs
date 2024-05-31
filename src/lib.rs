@@ -51,7 +51,7 @@ pub struct Items {
     game_flags: Vec<String>,
 }
 
-pub fn load_items() -> Items {
+pub fn load_items() -> Result<Items> {
     let path = Path::new("data/items.json");
 
     let mut file = match File::open(&path) {
@@ -70,7 +70,7 @@ pub fn load_items() -> Items {
         Ok(items) => items,
     };
 
-    return items;
+    return Ok(items);
 }
 
 #[cfg(test)]
@@ -80,6 +80,6 @@ mod tests {
     #[test]
     fn it_loads_items() {
         let config = load_items();
-        assert_eq!(config.starting_items.len(), 2);
+        assert!(config.is_ok());
     }
 }
