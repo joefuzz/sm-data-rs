@@ -1,5 +1,5 @@
 [package]
-name = "sm-data-rs"
+name = "sm-rs-data"
 version = "0.1.0"
 edition = "2021"
 
