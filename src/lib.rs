@@ -1,57 +1,13 @@
 #![allow(unused)]
 
+pub mod items;
+
 use std::{fs::File, path::Path};
 use std::io::prelude::*;
-use serde::Deserialize;
-use serde_json::Result;
+use items::*;
+use serde_json::Error;
 
-#[derive(Deserialize, Debug)]
-struct StartingResource {
-    resource: String,
-    #[serde(rename = "maxAmount")]
-    max_amount: u16
-}
-
-#[derive(Deserialize, Debug)]
-struct UpgradeItem {
-    name: String,
-    data: String,
-}
-
-#[derive(Deserialize, Debug)]
-struct ExpansionItem {
-    name: String,
-    data: String,
-    resource: String,
-    #[serde(rename = "resourceAmount")]
-    resource_amount: u16,
-}
-
-#[derive(Deserialize, Debug)]
-pub struct Items {
-    #[serde(rename = "startingRoom")]
-    starting_room: String,
-    #[serde(rename = "startingNode")]
-    starting_node: u16,
-    #[serde(rename = "startingItems")]
-    starting_items: Vec<String>,
-    #[serde(rename = "startingFlags")]
-    starting_flags: Vec<String>,
-    #[serde(rename = "startingLocks")]
-    starting_locks: Vec<String>,
-    #[serde(rename = "startingResources")]
-    starting_resources: Vec<StartingResource>,
-    #[serde(rename = "implicitItems")]
-    implicit_items: Vec<String>,
-    #[serde(rename = "upgradeItems")]
-    upgrade_items: Vec<UpgradeItem>,
-    #[serde(rename = "expansionItems")]
-    expansion_items: Vec<ExpansionItem>,
-    #[serde(rename = "gameFlags")]
-    game_flags: Vec<String>,
-}
-
-pub fn load_items() -> Result<Items> {
+pub fn load_items() -> Result<Items, Error> {
     let path = Path::new("data/items.json");
 
     let mut file = match File::open(&path) {
