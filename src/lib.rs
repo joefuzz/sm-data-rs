@@ -1,10 +1,12 @@
 #![allow(unused)]
 
 pub mod items;
+pub mod rooms;
 
 use std::{fs::File, path::Path};
 use std::io::prelude::*;
 use items::*;
+use rooms::*;
 use serde_json::Error;
 
 pub fn load_items() -> Result<Items, Error> {

@@ -24,7 +24,10 @@ East            18
 Maridia (54)
 ============
 Outer     12
-Inner     42
+Inner     42 (44?)
+|_ Green  (8)
+|_ Pink   (23)
+|_ Yellow (13)
 
 Norfair (53)
 ============
