@@ -2,29 +2,30 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-struct StartingResource {
+pub struct StartingResource {
     resource: Resource,
     max_amount: u16
 }
 
 #[derive(Deserialize, Debug)]
-struct UpgradeItem {
+pub struct UpgradeItem {
     name: ItemName,
     data: String,
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-struct ExpansionItem {
+pub struct ExpansionItem {
     name: ItemName,
     data: String,
     resource: Resource,
     resource_amount: u16,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Default)]
 #[serde(rename_all = "camelCase")]
-enum Resource {
+pub enum Resource {
+    #[default]
     RegularEnergy,
     ReserveEnergy,
     Missile,
@@ -33,7 +34,7 @@ enum Resource {
 }
 
 #[derive(Deserialize, Debug)]
-enum ItemName {
+pub enum ItemName {
     PowerBeam, 
     PowerSuit,
     Morph,
@@ -61,7 +62,7 @@ enum ItemName {
 
 #[derive(Deserialize, Debug)]
 #[allow(non_camel_case_types)]
-enum GameFlag {
+pub enum GameFlag {
     f_AnimalsSaved,
     f_BeatSuperMetroid,
     f_DefeatedBombTorizo,

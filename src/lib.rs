@@ -3,6 +3,7 @@
 pub mod items;
 pub mod rooms;
 pub mod notes;
+pub mod requirements;
 
 use std::{fs::File, path::Path};
 use std::io::prelude::*;
