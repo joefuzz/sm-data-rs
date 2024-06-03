@@ -1,9 +1,9 @@
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 struct StartingResource {
     resource: Resource,
-    #[serde(rename = "maxAmount")]
     max_amount: u16
 }
 
@@ -14,11 +14,11 @@ struct UpgradeItem {
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 struct ExpansionItem {
     name: ItemName,
     data: String,
     resource: Resource,
-    #[serde(rename = "resourceAmount")]
     resource_amount: u16,
 }
 
