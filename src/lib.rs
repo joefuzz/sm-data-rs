@@ -18,7 +18,7 @@ pub fn load_items() -> Result<Items, Error> {
     load_json_text(path, &mut text);
 
     let items: Items = match serde_json::from_str(&text) {
-        Err(why) => panic!("couldn't parse items.json: {}", why),
+        Err(why) => panic!("couldn't parse json at '{}': {}", path.to_string_lossy(), why),
         Ok(items) => items,
     };
 
@@ -32,7 +32,7 @@ pub fn load_room() -> Result<Room, Error> {
     load_json_text(path, &mut text);
 
     let room: Room = match serde_json::from_str(&text) {
-        Err(why) => panic!("couldn't parse json: {}", why),
+        Err(why) => panic!("couldn't parse json at '{}': {}", path.to_string_lossy(), why),
         Ok(items) => items,
     };
 
@@ -41,12 +41,12 @@ pub fn load_room() -> Result<Room, Error> {
 
 fn load_json_text<'buf>(path: &Path, text: &mut String) {
     let mut file = match File::open(path) {
-        Err(why) => panic!("couldn't open items.json: {}", why),
+        Err(why) => panic!("couldn't open json at '{}': {}", path.to_string_lossy(), why),
         Ok(file) => file,
     };
 
     match file.read_to_string(text) {
-        Err(why) => panic!("couldn't read items.json: {}", why),
+        Err(why) => panic!("couldn't read json at '{}': {}", path.to_string_lossy(), why),
         Ok(_) => (),
     }
 }
@@ -60,7 +60,7 @@ mod tests {
         let config = load_items();
         assert!(config.is_ok());
     }
-    
+
     #[test]
     fn it_deserializes_room() {
         let rooms = load_room();
