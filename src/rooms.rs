@@ -1,27 +1,26 @@
 use std::default;
 use serde::Deserialize;
 use serde_json::Map;
-use crate::{notes::{DevNote, Note}, requirements::Requirement, GameFlag};
-use crate::requirements::*;
+use crate::{notes::{DevNote, Note}, requirements::*, GameFlag};
 
 #[derive(Deserialize, Debug, Default)]
 #[serde(rename_all = "camelCase", default)]
 pub struct Room {
-    id:                         u8,
-    name:                       String,
-    area:                       Area,
-    subarea:                    SubArea,
-    subsubarea:                 SubSubArea,
-    playable:                   bool,
-    nodes:                      Vec<Node>,
-    links:                      Vec<Link>,
-    strats:                     Vec<Strat>,
-    room_address:               Option<RoomMemoryAddress>,
-    obstacles:                  Option<Vec<Obstacle>>,
-    enemies:                    Option<Vec<Enemy>>,
-    reusable_roomwide_notable:  Option<Vec<ReusableRoomwideStrat>>,
-    note:                       Option<Note>,
-    dev_note:                   Option<DevNote>,
+    pub id:                         u8,
+    pub name:                       String,
+    pub area:                       Area,
+    pub subarea:                    SubArea,
+    pub subsubarea:                 SubSubArea,
+    pub playable:                   bool,
+    pub nodes:                      Vec<Node>,
+    pub links:                      Vec<Link>,
+    pub strats:                     Vec<Strat>,
+    pub room_address:               Option<RoomMemoryAddress>,
+    pub obstacles:                  Option<Vec<Obstacle>>,
+    pub enemies:                    Option<Vec<Enemy>>,
+    pub reusable_roomwide_notable:  Option<Vec<ReusableRoomwideStrat>>,
+    pub note:                       Option<Note>,
+    pub dev_note:                   Option<DevNote>,
 }
 
 #[derive(Deserialize, Debug, Default)]
@@ -556,24 +555,27 @@ pub enum YesNoAny {
     Any,
 }
 
-#[derive(Deserialize, Debug, Default)]
+#[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct ExitCondition {
-    leave_normally:                 Option<LeaveNormally>,
-    leave_with_runway:              Option<LeaveRunway>,
-    leave_shinecharged:             Option<SparkFramesRemaining>,
-    leave_with_temporary_blue:      Option<TransitionWithTemporaryBlue>,
-    leave_with_spark:               Option<TransitionWithSpark>,
-    leave_spinning:                 Option<LeaveSpinning>,
-    leave_with_mockball:            Option<LeaveWithMockball>,
-    leave_with_spring_ball_bounce:  Option<LeaveWithSpringBallBounce>,
-    leave_space_jumping:            Option<LeaveSpaceJumping>,
-    leave_with_stored_fall_speed:   Option<TransitionWithStoredFallSpeed>,
-    leave_with_g_mode_setup:        Option<LeaveWithGModeSetup>,
-    leave_with_g_mode:              Option<LeaveWithGMode>,
-    leave_with_door_frame_below:    Option<LeaveWithDoorFrameBelow>,
-    leave_with_platform_below:      Option<LeaveWithPlatformBelow>,
-    leave_with_grapple_teleport:    Option<TransitionWithGrappleTeleport>,
+pub enum ExitCondition {
+    LeaveNormally {},
+    LeaveWithRunway(Runway),
+    LeaveShinecharged(SparkFramesRemaining),
+    LeaveWithTemporaryBlue(FacingThroughTransition),
+    LeaveWithSpark(TransitionWithSpark),
+    LeaveSpinning { remote_runway:  Runway, blue: Option<YesNoAny>, },
+    LeaveWithMockball { remote_runway: Runway, landing_runway: Runway, blue: Option<YesNoAny>, },
+    LeaveWithSpringBallBounce { remote_runway: Runway, landing_runway: Runway, movement_type: SpringBallMovement, blue: Option<YesNoAny>, },
+    LeaveSpaceJumping { remote_runway: Runway, blue: YesNoAny, },
+    LeaveWithStoredFallSpeed { fall_speed_in_tiles: u8, },
+    LeaveWithGModeSetup { knockback: Option<bool>, },
+    LeaveWithGMode { morphed: bool, },
+    LeaveWithDoorFrameBelow { height: u8, },
+    LeaveWithPlatformBelow { height: u8, left_position: u8, right_position: u8, },
+    LeaveWithGrappleTeleport { 
+        #[serde(alias = "blockPositions")]
+        block_positions: Vec<(u8, u8)>, 
+    },
 }
 
 #[derive(Deserialize, Debug, Default)]
@@ -597,7 +599,8 @@ pub struct LeaveRunway {
 pub enum SparkFramesRemaining {
     #[default]
     Auto,
-    FramesRemaining(u8),
+    #[serde(rename = "framesRemaining")]
+    Frames(u8),
 }
 
 #[derive(Deserialize, Debug, Default)]
