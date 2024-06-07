@@ -1,6 +1,7 @@
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug, Default)]
+#[serde(untagged)]
 pub enum Note {
     #[default]
     None,
@@ -9,6 +10,7 @@ pub enum Note {
 }
 
 #[derive(Deserialize, Debug, Default)]
+#[serde(untagged)]
 pub enum DevNote {
     #[default]
     None,
