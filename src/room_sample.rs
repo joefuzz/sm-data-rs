@@ -3094,7 +3094,7 @@ Room {
                 spawn: Some(
                     [
                         Condition(
-                            Tech(
+                            Flag(
                                 "f_ZebesAwake",
                             ),
                         ),
