@@ -10,13 +10,13 @@ pub enum Requirement {
     #[serde(rename = "and")]
     LogicalAnd(Vec<Requirement>),
     #[serde(untagged)]
-    Simple(Check),
+    Condition(Check),
 }
 
 #[derive(Deserialize, Debug)]
 pub enum Check {
     #[serde(untagged)]
-    Strategy(Logic),
+    Logic(Logic),
     #[serde(untagged)]
     Equipment(ItemName),
     #[serde(untagged)]
@@ -74,13 +74,13 @@ pub enum Logic {
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct SpeedConditions {
-    used_tiles:             u8,
-    open_end:               u8,
-    gentle_up_tiles:        Option<u8>,
-    gentle_down_tiles:      Option<u8>,
-    steep_up_tiles:         Option<u8>,
-    steep_down_tiles:       Option<u8>,
-    starting_down_tiles:    Option<u8>,
+    pub used_tiles:             u8,
+    pub open_end:               u8,
+    pub gentle_up_tiles:        Option<u8>,
+    pub gentle_down_tiles:      Option<u8>,
+    pub steep_up_tiles:         Option<u8>,
+    pub steep_down_tiles:       Option<u8>,
+    pub starting_down_tiles:    Option<u8>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -94,30 +94,30 @@ pub enum AmmoResource {
 #[serde(rename_all = "camelCase")]
 pub struct AmmoAmount {
     #[serde(rename = "type")]
-    ammo_type: AmmoResource,
-    count: u8,
+    pub ammo_type: AmmoResource,
+    pub count: u8,
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ResourceAmount {
     #[serde(rename = "type")]
-    resource_type: Resource,
-    count: u8,
+    pub resource_type: Resource,
+    pub count: u8,
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct EnemiesToKill {
-    enemies:            Vec<Vec<String>>,
-    explicit_weapons:   Option<Vec<String>>,
-    excluded_weapons:   Option<Vec<String>>,
-    farmable_ammo:      Option<Vec<String>>,
+    pub enemies:            Vec<Vec<String>>,
+    pub explicit_weapons:   Option<Vec<String>>,
+    pub excluded_weapons:   Option<Vec<String>>,
+    pub farmable_ammo:      Option<Vec<String>>,
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct EnemyDrops {
-    enemy: String,
-    count: u8,
+    pub enemy: String,
+    pub count: u8,
 }

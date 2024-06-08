@@ -68,6 +68,6 @@ mod tests {
             Ok(room) => room,
             Err(error) => panic!("Couldn't unwrap room: {:?}", error),
         };
-        println!("Room Strats: {:?}", r.strats);
+        println!("Room: {:#?}", r);
     }
 }
