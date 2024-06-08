@@ -68,6 +68,6 @@ mod tests {
             Ok(room) => room,
             Err(error) => panic!("Couldn't unwrap room: {:?}", error),
         };
-        println!("Room: {:#?}", r);
+        println!("{:#?}", r.nodes[0].locks);
     }
 }

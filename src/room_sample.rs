@@ -94,7 +94,7 @@ Room {
                         lock: Some(
                             [
                                 Condition(
-                                    Tech(
+                                    Flag(
                                         "f_ZebesAwake",
                                     ),
                                 ),

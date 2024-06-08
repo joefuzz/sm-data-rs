@@ -20,9 +20,9 @@ pub enum Check {
     #[serde(untagged)]
     Equipment(ItemName),
     #[serde(untagged)]
-    Tech(String),
-    #[serde(untagged)]
     Flag(GameFlag),
+    #[serde(untagged)]
+    Tech(String),
 }
 
 #[derive(Deserialize, Debug)]
